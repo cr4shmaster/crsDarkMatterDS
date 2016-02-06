@@ -1,13 +1,19 @@
-name = "Dark Matter"
+name = "Dark Matter TEST"
 description = "Adds Dark Motes, Dark Matter and Dark Pylon to the game."
 author = "cr4shmaster"
-version = "2.1.4"
+version = "2.2.0"
 forumthread = ""
 dont_starve_compatible = true
 reign_of_giants_compatible = true
+shipwrecked_compatible = true
 api_version = 6
 icon_atlas = "modicon.xml"
 icon = "modicon.tex"
+
+--[[ 
+Notes:
+ - need to implement shipwrecked items
+--]]
 
 local crsDarkmotes = {
  {description = "50", data = 50},
