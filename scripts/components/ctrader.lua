@@ -56,8 +56,8 @@ function Ctrader:AcceptGift(giver, item)
  end
 
  if self.onrefuse then
-		self.onrefuse(self.inst, giver, item)
-	end
+  self.onrefuse(self.inst, giver, item)
+ end
 end
 
 return Ctrader

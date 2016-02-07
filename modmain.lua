@@ -57,25 +57,26 @@ darkpylon.atlas = "images/inventoryimages/darkpylon.xml"
 
 -- tweak give action
 GLOBAL.ACTIONS.GIVE.fn = function(act)
-	if act.target.components.trader then
-	 act.target.components.trader:AcceptGift(act.doer, act.invobject)
-	 return true
-	end
-	if act.target.components.ctrader then
-	 act.target.components.ctrader:AcceptGift(act.doer, act.invobject)
-	 return true
-	end
+ if act.target.components.trader then
+  act.target.components.trader:AcceptGift(act.doer, act.invobject)
+  return true
+ end
+ if act.target.components.ctrader then
+  act.target.components.ctrader:AcceptGift(act.doer, act.invobject)
+  return true
+ end
 end
 
 -- add tint
 local function crsImageTintUpdate(self, num, atlas, bgim, owner, container)
-	if container.widgetbgimagetint then
-		self.bgimage:SetTint(container.widgetbgimagetint.r, container.widgetbgimagetint.g, container.widgetbgimagetint.b, container.widgetbgimagetint.a)
+ if container.widgetbgimagetint then
+  self.bgimage:SetTint(container.widgetbgimagetint.r, container.widgetbgimagetint.g, container.widgetbgimagetint.b, container.widgetbgimagetint.a)
  end
 end
 AddClassPostConstruct("widgets/invslot", crsImageTintUpdate)
 
 -- add item values
+if GLOBAL.IsDLCEnabled(GLOBAL.REIGN_OF_GIANTS) then
 local crsItemMoteValue = {
  {name = "ash", motevalue = 1},
  {name = "backpack", motevalue = 6},
@@ -134,6 +135,10 @@ local crsItemMoteValue = {
  {name = "walrus_tusk", motevalue = 20},
  {name = "yellowgem", motevalue = 20},
 }
+end
+local crsItemMoteValue = {
+ {name = "ash", motevalue = 1},
+}
 
 for k,v in pairs(crsItemMoteValue) do
  AddPrefabPostInit(v.name, function(inst)
@@ -145,5 +150,5 @@ end
 
 local crsWidgetPosition = Vector3(GetModConfigData("crsHorizontalPosition"),GetModConfigData("crsVerticalPosition"),0) -- background image position
 AddPrefabPostInit("darkpylon", function(inst)
-	inst.components.container.widgetpos = crsWidgetPosition
+ inst.components.container.widgetpos = crsWidgetPosition
 end)
