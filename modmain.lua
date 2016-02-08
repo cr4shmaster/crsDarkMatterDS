@@ -76,7 +76,6 @@ end
 AddClassPostConstruct("widgets/invslot", crsImageTintUpdate)
 
 -- add item values
-if GLOBAL.IsDLCEnabled(GLOBAL.REIGN_OF_GIANTS) then
 local crsItemMoteValue = {
  {name = "ash", motevalue = 1},
  {name = "backpack", motevalue = 6},
@@ -135,17 +134,15 @@ local crsItemMoteValue = {
  {name = "walrus_tusk", motevalue = 20},
  {name = "yellowgem", motevalue = 20},
 }
-end
-local crsItemMoteValue = {
- {name = "ash", motevalue = 1},
-}
 
 for k,v in pairs(crsItemMoteValue) do
- AddPrefabPostInit(v.name, function(inst)
-  inst:AddTag("ctradable")
-  inst:AddComponent("ctradable")    
-  inst.components.ctradable.motevalue = v.motevalue
- end)
+ if v.name then
+  AddPrefabPostInit(v.name, function(inst)
+   inst:AddTag("ctradable")
+   inst:AddComponent("ctradable")    
+   inst.components.ctradable.motevalue = v.motevalue
+  end)
+ end
 end
 
 local crsWidgetPosition = Vector3(GetModConfigData("crsHorizontalPosition"),GetModConfigData("crsVerticalPosition"),0) -- background image position

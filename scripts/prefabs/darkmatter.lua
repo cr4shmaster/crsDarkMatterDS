@@ -17,7 +17,6 @@ local function crsOnDropped(inst)
 end
 
 -- loot table
-if IsDLCEnabled(REIGN_OF_GIANTS) then
 SetSharedLootTable ( 'darkmatter', {
  {"deerclops_eyeball", .01},
  {"bearger_fur", .01},
@@ -51,17 +50,13 @@ SetSharedLootTable ( 'darkmatter', {
  {"stinger", .25},
  
  {"goldnugget", .30},
- 
+  
  {"rocks", 0.50},
  {"flint", 0.50},
  {"twigs", 0.50},
  {"nitre", 0.50},
  {"ash", 0.50},
  {"charcoal", 0.50},
-})
-end
-SetSharedLootTable ( 'darkmatter', {
- {"goldnugget", .30},
 })
 
 local function fn(Sim)

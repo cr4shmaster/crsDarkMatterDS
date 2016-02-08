@@ -1,4 +1,4 @@
-name = "Dark Matter TEST"
+name = "Dark Matter v2.2"
 description = "Adds Dark Motes, Dark Matter and Dark Pylon to the game."
 author = "cr4shmaster"
 version = "2.2.0"
