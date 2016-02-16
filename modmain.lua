@@ -133,6 +133,22 @@ local crsItemMoteValue = {
  {name = "twigs", motevalue = 1},
  {name = "walrus_tusk", motevalue = 20},
  {name = "yellowgem", motevalue = 20},
+ 
+ {name = "sand", motevalue = 1},
+ {name = "coral", motevalue = 1},
+ {name = "venomgland", motevalue = 1},
+ {name = "bamboo", motevalue = 1},
+ {name = "doydoyfeather", motevalue = 1},
+ {name = "vine", motevalue = 1},
+ {name = "snakeskin", motevalue = 1},
+ {name = "palmleaf", motevalue = 1},
+ {name = "fabric", motevalue = 2},
+ {name = "limestone", motevalue = 2},
+ {name = "obsidian", motevalue = 3},
+ {name = "dubloon", motevalue = 3},
+ {name = "shark_gills", motevalue = 10},
+ {name = "turbine_blades", motevalue = 50},
+ {name = "snakeoil", motevalue = 100},
 }
 
 for k,v in pairs(crsItemMoteValue) do
