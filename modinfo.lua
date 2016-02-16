@@ -10,11 +10,6 @@ api_version = 6
 icon_atlas = "modicon.xml"
 icon = "modicon.tex"
 
---[[ 
-Notes:
- - need to implement shipwrecked items
---]]
-
 local crsDarkmotes = {
  {description = "50", data = 50},
  {description = "75", data = 75},
