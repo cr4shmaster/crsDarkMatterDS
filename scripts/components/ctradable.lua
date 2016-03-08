@@ -7,7 +7,7 @@ end)
 
 function Ctradable:CollectUseActions(doer, target, actions)
  if target.components.ctrader and target.components.ctrader.enabled then
-  table.insert(actions, ACTIONS.GIVE)
+  table.insert(actions, ACTIONS.CGIVE)
  end
 end
 

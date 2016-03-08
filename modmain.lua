@@ -22,6 +22,9 @@ Ingredient = GLOBAL.Ingredient
 TECH = GLOBAL.TECH
 GLOBAL.crsDamagePenaltyOnUse = GetModConfigData("crsDarkMatterMaxDamageTaken")
 Vector3 = GLOBAL.Vector3
+ACTIONS = GLOBAL.ACTIONS
+Action = GLOBAL.Action
+ActionHandler = GLOBAL.ActionHandler
 
 -- add strings
 STRINGS.NAMES.DARKMATTER = "Dark Matter"
@@ -33,6 +36,7 @@ STRINGS.CHARACTERS.GENERIC.DESCRIBE.DARKMOTE = "It's used to create Dark Matter.
 STRINGS.NAMES.DARKPYLON = "Dark Pylon"
 STRINGS.RECIPE_DESC.DARKPYLON = "Turns most things into Dark Motes."
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.DARKPYLON = "I better not touch it directly!"
+
 
 -- add recipes
 local crsDarkMatterDarkMotes = Ingredient("darkmote", GetModConfigData("crsDarkMatterDarkMotes"))
@@ -55,17 +59,20 @@ local darkpylon = Recipe("darkpylon", {
 }, RECIPETABS.ANCIENT, TECH.MAGIC_TWO, "darkpylon_placer")
 darkpylon.atlas = "images/inventoryimages/darkpylon.xml"
 
--- tweak give action
-GLOBAL.ACTIONS.GIVE.fn = function(act)
- if act.target.components.trader then
-  act.target.components.trader:AcceptGift(act.doer, act.invobject)
-  return true
- end
- if act.target.components.ctrader then
-  act.target.components.ctrader:AcceptGift(act.doer, act.invobject)
-  return true
+-- action
+local CGIVE = Action()
+CGIVE.str = "Give"
+CGIVE.id = "CGIVE"
+CGIVE.fn = function(act)
+ if act.invobject.components.ctradable then
+  if act.target.components.ctrader then
+   act.target.components.ctrader:AcceptGift(act.doer, act.invobject)
+   return true
+  end
  end
 end
+AddAction(CGIVE)
+AddStategraphActionHandler("wilson", ActionHandler(CGIVE, "give"))
 
 -- add tint
 local function crsImageTintUpdate(self, num, atlas, bgim, owner, container)
