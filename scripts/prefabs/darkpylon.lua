@@ -1,6 +1,6 @@
 local assets = {
  Asset("ANIM", "anim/darkpylon.zip"),
- Asset("SOUND", "sound/pig.fsb"),
+ -- Asset("SOUND", "sound/pig.fsb"),
  Asset("ATLAS", "images/inventoryimages/darkcontainer.xml" ),
  Asset("IMAGE", "images/inventoryimages/darkcontainer.tex" ),
 }
@@ -71,7 +71,7 @@ local function fn(Sim)
  MakeObstaclePhysics(inst, 0.5, 0.5) -- can't pass through
  
  inst.entity:AddDynamicShadow()
- inst.DynamicShadow:SetSize( 10, 5 )
+ inst.DynamicShadow:SetSize(10,5)
  
  inst.entity:AddAnimState()
  inst.AnimState:SetBank("darkpylon")

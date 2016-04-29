@@ -26,6 +26,8 @@ ACTIONS = GLOBAL.ACTIONS
 Action = GLOBAL.Action
 ActionHandler = GLOBAL.ActionHandler
 
+local C = GLOBAL.IsDLCEnabled(GLOBAL.CAPY_DLC)
+
 -- add strings
 STRINGS.NAMES.DARKMATTER = "Dark Matter"
 STRINGS.RECIPE_DESC.DARKMATTER = "Home-made dark matter."
@@ -46,19 +48,26 @@ crsDarkPylonDarkMotes.atlas = "images/inventoryimages/darkmote.xml"
 -- Dark Mote
 local darkmote = Recipe("darkmote", {
  Ingredient("goldnugget", 1),
-}, RECIPETABS.ANCIENT, TECH.NONE, nil, nil, nil, 3)
+}, RECIPETABS.REFINE, TECH.NONE, nil, nil, nil, 3)
 darkmote.atlas = "images/inventoryimages/darkmote.xml"
 -- Dark Matter
 local darkmatter = Recipe("darkmatter", {
  crsDarkMatterDarkMotes,
-}, RECIPETABS.ANCIENT, TECH.MAGIC_THREE)
+}, RECIPETABS.REFINE, TECH.MAGIC_THREE)
 darkmatter.atlas = "images/inventoryimages/darkmatter.xml"
 -- Dark Pylon
-local darkpylon = Recipe("darkpylon", {
- crsDarkPylonDarkMotes,
-}, RECIPETABS.ANCIENT, TECH.MAGIC_TWO, "darkpylon_placer")
-darkpylon.atlas = "images/inventoryimages/darkpylon.xml"
-
+if C then
+ local darkpylon = Recipe("darkpylon", {
+  crsDarkPylonDarkMotes,
+ }, RECIPETABS.REFINE, TECH.MAGIC_TWO, GLOBAL.RECIPE_GAME_TYPE.COMMON, "darkpylon_placer")
+ darkpylon.atlas = "images/inventoryimages/darkpylon.xml"
+else
+ local darkpylon = Recipe("darkpylon", {
+  crsDarkPylonDarkMotes,
+ }, RECIPETABS.REFINE, TECH.MAGIC_TWO, "darkpylon_placer")
+ darkpylon.atlas = "images/inventoryimages/darkpylon.xml"
+end
+ 
 -- action
 local CGIVE = Action()
 CGIVE.str = "Give"
