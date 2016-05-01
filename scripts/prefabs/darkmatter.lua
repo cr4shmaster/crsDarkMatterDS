@@ -5,8 +5,16 @@ local assets = {
  Asset("IMAGE", "images/inventoryimages/darkmatter.tex"),
 }
 
+local crsDarkMatterDS = nil
+if GetModConfigData("crsDarkFarmerTest", "workshop-407474316") == 1 then
+ crsDarkMatterDS = "workshop-407474316"
+else
+ crsDarkMatterDS = "crsDarkMatterDS"
+end
+local crsMaxDamageTaken = GetModConfigData("crsDarkMatterMaxDamageTaken", crsDarkMatterDS)
+
 local function crsOnDropped(inst)
- local gamble = math.random(crsDamagePenaltyOnUse)
+ local gamble = math.random(crsMaxDamageTaken)
  GetPlayer().components.health:DoDelta(-gamble) -- does damage when used
  local oldtuning = TUNING.HAMMER_LOOT_PERCENT
  TUNING.HAMMER_LOOT_PERCENT = 0

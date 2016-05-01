@@ -20,7 +20,6 @@ RECIPETABS = GLOBAL.RECIPETABS
 Recipe = GLOBAL.Recipe
 Ingredient = GLOBAL.Ingredient
 TECH = GLOBAL.TECH
-GLOBAL.crsDamagePenaltyOnUse = GetModConfigData("crsDarkMatterMaxDamageTaken")
 Vector3 = GLOBAL.Vector3
 ACTIONS = GLOBAL.ACTIONS
 Action = GLOBAL.Action
