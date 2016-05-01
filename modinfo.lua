@@ -1,7 +1,7 @@
 name = "Dark Matter v2.2"
 description = "Adds Dark Motes, Dark Matter and Dark Pylon to the game."
 author = "cr4shmaster"
-version = "2.2.2"
+version = "2.2.3"
 forumthread = ""
 dont_starve_compatible = true
 reign_of_giants_compatible = true
@@ -103,5 +103,13 @@ configuration_options = {
   label = "DP UI y Position",
   options = crsPosition,
   default = -100,
+ },
+ {
+  name = "crsDarkMatterTest",
+  label = "Installed",
+  options = {
+   {description = "Yes", data = 1},
+  },
+  default = 1,
  },
 }
