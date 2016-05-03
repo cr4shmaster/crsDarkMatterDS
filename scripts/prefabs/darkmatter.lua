@@ -14,13 +14,15 @@ end
 local crsMaxDamageTaken = GetModConfigData("crsDarkMatterMaxDamageTaken", crsDarkMatterDS)
 
 local function crsOnDropped(inst)
- local x,y,z = GetPlayer().Transform:GetWorldPosition()
+ local x,y,z = GetPlayer().Transform:GetWorldPosition() -- get player position
  local crsRandomChance = math.random(1000)
+ -- 0.1% chance to spawn a boss 
  if crsRandomChance == 666 then
   local crsRandomBoss = inst.crsBosses[math.random(#inst.crsBosses)]
   local crsBoss = SpawnPrefab(crsRandomBoss)
   crsBoss.Transform:SetPosition(x + 5, y + 5, z)
   crsBoss.components.combat:SetTarget(GetPlayer())
+ -- 5% chance to spawn a mob
  elseif crsRandomChance <= 50 then
   local crsRandomMob = inst.crsMobs[math.random(#inst.crsMobs)]
   local crsMob = SpawnPrefab(crsRandomMob)
@@ -29,10 +31,12 @@ local function crsOnDropped(inst)
  else
   local crsCycles = 1
   local crsJackpot = math.random(10000)
+  local crsRandomDamage = math.random(crsMaxDamageTaken)
+  -- 0.001% chance to drop items 99 more times and restore full health
   if crsJackpot == 1337 then
    crsCycles = 100
+   crsRandomDamage = -1000
   end
-  local crsRandomDamage = math.random(crsMaxDamageTaken)
   GetPlayer().components.health:DoDelta(-crsRandomDamage) -- does damage when used
   local oldHammerLootPercent = TUNING.HAMMER_LOOT_PERCENT
   TUNING.HAMMER_LOOT_PERCENT = 0

@@ -10,7 +10,7 @@ api_version = 6
 icon_atlas = "modicon.xml"
 icon = "modicon.tex"
 
-local crsDarkmotes = {
+local crsDarkMotes = {
  {description = "5", data = 5},
  {description = "10", data = 10},
  {description = "25", data = 25},
@@ -80,7 +80,7 @@ configuration_options = {
  {
   name = "crsDarkMatterDarkMotes",
   label = "DM Dark Motes",
-  options = crsDarkmotes,
+  options = crsDarkMotes,
   default = 100,
  },
  {
@@ -92,7 +92,7 @@ configuration_options = {
  {
   name = "crsDarkPylonDarkMotes",
   label = "DP Dark Motes",
-  options = crsDarkmotes,
+  options = crsDarkMotes,
   default = 50,
  },
  {

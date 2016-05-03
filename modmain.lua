@@ -203,14 +203,14 @@ local crsShipwreckedMobs = {"snake", "snake_poison", "mosquito_poison", "dragoon
 local crsShipwreckedBosses = {"tigershark",}
 
 if crsAnyDLCEnabled then
- for i=1, #crsReignOfGiantsMobs do
+ for i = 1, #crsReignOfGiantsMobs do
   table.insert(crsMobs, crsReignOfGiantsMobs[i])
   table.insert(crsBosses, crsReignOfGiantsBosses[i])
  end
 end
 
 if crsShipwreckedEnabled then
- for i=1, #crsReignOfGiantsMobs do
+ for i = 1, #crsReignOfGiantsMobs do
   table.insert(crsMobs, crsShipwreckedMobs[i])
   table.insert(crsBosses, crsShipwreckedBosses[i])
  end
