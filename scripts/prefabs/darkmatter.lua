@@ -30,7 +30,7 @@ local function crsOnDropped(inst)
   local crsCycles = 1
   local crsJackpot = math.random(10000)
   if crsJackpot == 1337 then
-   crsCycles = 20
+   crsCycles = 100
   end
   local crsRandomDamage = math.random(crsMaxDamageTaken)
   GetPlayer().components.health:DoDelta(-crsRandomDamage) -- does damage when used
