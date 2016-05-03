@@ -25,7 +25,17 @@ ACTIONS = GLOBAL.ACTIONS
 Action = GLOBAL.Action
 ActionHandler = GLOBAL.ActionHandler
 
-local C = GLOBAL.IsDLCEnabled(GLOBAL.CAPY_DLC)
+local function crsMergeTables(a, b)
+ for i=1, #b do
+  table.insert(a, b[i])
+ end
+ return a
+end
+
+-- local crsNoDLCEnabled = not GLOBAL.IsDLCEnabled(GLOBAL.REIGN_OF_GIANTS) and not GLOBAL.IsDLCEnabled(GLOBAL.CAPY_DLC)
+local crsAnyDLCEnabled = GLOBAL.IsDLCEnabled(GLOBAL.REIGN_OF_GIANTS) or GLOBAL.IsDLCEnabled(GLOBAL.CAPY_DLC)
+local crsReignOfGiantsEnabled = GLOBAL.IsDLCEnabled(GLOBAL.REIGN_OF_GIANTS)
+local crsShipwreckedEnabled = GLOBAL.IsDLCEnabled(GLOBAL.CAPY_DLC)
 
 -- add strings
 STRINGS.NAMES.DARKMATTER = "Dark Matter"
@@ -55,15 +65,15 @@ local darkmatter = Recipe("darkmatter", {
 }, RECIPETABS.REFINE, TECH.MAGIC_THREE)
 darkmatter.atlas = "images/inventoryimages/darkmatter.xml"
 -- Dark Pylon
-if C then
+if crsShipwreckedEnabled then
  local darkpylon = Recipe("darkpylon", {
   crsDarkPylonDarkMotes,
- }, RECIPETABS.REFINE, TECH.MAGIC_TWO, GLOBAL.RECIPE_GAME_TYPE.COMMON, "darkpylon_placer")
+ }, RECIPETABS.REFINE, TECH.NONE, GLOBAL.RECIPE_GAME_TYPE.COMMON, "darkpylon_placer")
  darkpylon.atlas = "images/inventoryimages/darkpylon.xml"
 else
  local darkpylon = Recipe("darkpylon", {
   crsDarkPylonDarkMotes,
- }, RECIPETABS.REFINE, TECH.MAGIC_TWO, "darkpylon_placer")
+ }, RECIPETABS.REFINE, TECH.NONE, "darkpylon_placer")
  darkpylon.atlas = "images/inventoryimages/darkpylon.xml"
 end
  
@@ -93,76 +103,78 @@ AddClassPostConstruct("widgets/invslot", crsImageTintUpdate)
 -- add item values
 local crsItemMoteValue = {
  {name = "ash", motevalue = 1},
- {name = "backpack", motevalue = 6},
- {name = "beardhair", motevalue = 2},
- {name = "bearger_fur", motevalue = 50},
- {name = "beefalowool", motevalue = 2},
- {name = "bluegem", motevalue = 10},
- {name = "boards", motevalue = 3},
  {name = "boneshard", motevalue = 1},
  {name = "charcoal", motevalue = 1},
  {name = "cutgrass", motevalue = 1},
  {name = "cutreeds", motevalue = 1},
- {name = "cutstone", motevalue = 2},
- {name = "darkmatter", motevalue = GetModConfigData("crsDarkMatterDarkMotes") * 0.5},
- {name = "deerclops_eyeball", motevalue = 50},
- {name = "dragon_scales", motevalue = 50},
  {name = "feather_crow", motevalue = 1},
- {name = "feather_robin", motevalue = 2},
- {name = "feather_robin_winter", motevalue = 3},
  {name = "flint", motevalue = 1},
- {name = "gears", motevalue = 6},
- {name = "goldnugget", motevalue = 3},
- {name = "goose_feather", motevalue = 10},
- {name = "greengem", motevalue = 20},
- {name = "honeycomb", motevalue = 5},
- {name = "horn", motevalue = 5},
- {name = "houndstooth", motevalue = 3},
- {name = "lightninggoathorn", motevalue = 5},
- {name = "livinglog", motevalue = 5},
  {name = "log", motevalue = 1},
- {name = "manrabbit_tail", motevalue = 5},
- {name = "marble", motevalue = 6},
- {name = "minotaurhorn", motevalue = 50},
- {name = "mosquitosack", motevalue = 5},
- {name = "nightmarefuel", motevalue = 5},
- {name = "nitre", motevalue = 2},
- {name = "papyrus", motevalue = 3},
- {name = "piggyback", motevalue = 18},
- {name = "pigskin", motevalue = 3},
  {name = "poop", motevalue = 1},
- {name = "purplegem", motevalue = 15},
- {name = "redgem", motevalue = 10},
  {name = "rocks", motevalue = 1},
- {name = "rope", motevalue = 2},
- {name = "rottenegg", motevalue = 2},
- {name = "silk", motevalue = 2},
- {name = "slurtleslime", motevalue = 2},
- {name = "spidergland", motevalue = 2},
- -- {name = "spoiled_food", motevalue = 1},
  {name = "stinger", motevalue = 1},
- {name = "tentaclespots", motevalue = 5},
- {name = "thulecite", motevalue = 8},
  {name = "thulecite_pieces", motevalue = 1},
- {name = "transistor", motevalue = 6},
  {name = "twigs", motevalue = 1},
- {name = "walrus_tusk", motevalue = 20},
- {name = "yellowgem", motevalue = 20},
- 
  {name = "sand", motevalue = 1},
  {name = "coral", motevalue = 1},
- {name = "venomgland", motevalue = 1},
  {name = "bamboo", motevalue = 1},
  {name = "doydoyfeather", motevalue = 1},
  {name = "vine", motevalue = 1},
  {name = "snakeskin", motevalue = 1},
  {name = "palmleaf", motevalue = 1},
- {name = "fabric", motevalue = 2},
+ {name = "seashell", motevalue = 1},
+
+ {name = "beardhair", motevalue = 2},
+ {name = "beefalowool", motevalue = 2},
+ {name = "rottenegg", motevalue = 2},
+ {name = "silk", motevalue = 2},
+ {name = "slurtleslime", motevalue = 2},
+ {name = "spidergland", motevalue = 2},
+ {name = "feather_robin", motevalue = 2},
+ {name = "nitre", motevalue = 2},
  {name = "limestone", motevalue = 2},
+ {name = "venomgland", motevalue = 2},
+
+ {name = "feather_robin_winter", motevalue = 3},
+ {name = "goldnugget", motevalue = 3},
+ {name = "houndstooth", motevalue = 3},
+ {name = "pigskin", motevalue = 3},
  {name = "obsidian", motevalue = 3},
- {name = "dubloon", motevalue = 3},
+ 
+ {name = "honeycomb", motevalue = 5},
+ {name = "horn", motevalue = 5},
+ {name = "lightninggoathorn", motevalue = 5},
+ {name = "livinglog", motevalue = 5},
+ {name = "manrabbit_tail", motevalue = 5},
+ {name = "mosquitosack", motevalue = 5},
+ {name = "nightmarefuel", motevalue = 5},
+ {name = "tentaclespots", motevalue = 5},
+ -- {name = "fireflies", motevalue = 5},
+ -- {name = "bioluminescence", motevalue = 5},
+ 
+ {name = "gears", motevalue = 6},
+ {name = "marble", motevalue = 6},
+ 
+ {name = "thulecite", motevalue = 8},
+ 
+ {name = "bluegem", motevalue = 10},
+ {name = "goose_feather", motevalue = 10},
  {name = "shark_gills", motevalue = 10},
+ {name = "redgem", motevalue = 10},
+ 
+ {name = "purplegem", motevalue = 15},
+ 
+ {name = "greengem", motevalue = 20},
+ {name = "walrus_tusk", motevalue = 20},
+ {name = "yellowgem", motevalue = 20},
+ {name = "bearger_fur", motevalue = 50},
+ 
+ {name = "deerclops_eyeball", motevalue = 50},
+ {name = "dragon_scales", motevalue = 50},
+ {name = "minotaurhorn", motevalue = 50},
  {name = "turbine_blades", motevalue = 50},
+ {name = "tigereye", motevalue = 50},
+ 
  {name = "snakeoil", motevalue = 100},
 }
 
@@ -179,4 +191,32 @@ end
 local crsWidgetPosition = Vector3(GetModConfigData("crsHorizontalPosition"),GetModConfigData("crsVerticalPosition"),0) -- background image position
 AddPrefabPostInit("darkpylon", function(inst)
  inst.components.container.widgetpos = crsWidgetPosition
+end)
+
+local crsMobs = {"spider", "hound", "ghost", "knight", "bat", "frog", "tallbird", "mosquito", "killerbee",}
+local crsBosses = {"deerclops",}
+
+local crsReignOfGiantsMobs = {"warg",}
+local crsReignOfGiantsBosses = {"bearger", "dragonfly",}
+
+local crsShipwreckedMobs = {"snake", "snake_poison", "mosquito_poison", "dragoon",}
+local crsShipwreckedBosses = {"tigershark",}
+
+if crsAnyDLCEnabled then
+ for i=1, #crsReignOfGiantsMobs do
+  table.insert(crsMobs, crsReignOfGiantsMobs[i])
+  table.insert(crsBosses, crsReignOfGiantsBosses[i])
+ end
+end
+
+if crsShipwreckedEnabled then
+ for i=1, #crsReignOfGiantsMobs do
+  table.insert(crsMobs, crsShipwreckedMobs[i])
+  table.insert(crsBosses, crsShipwreckedBosses[i])
+ end
+end
+
+AddPrefabPostInit("darkmatter", function(inst)
+ inst.crsMobs = crsMobs
+ inst.crsBosses = crsBosses
 end)

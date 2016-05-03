@@ -14,14 +14,35 @@ end
 local crsMaxDamageTaken = GetModConfigData("crsDarkMatterMaxDamageTaken", crsDarkMatterDS)
 
 local function crsOnDropped(inst)
- local gamble = math.random(crsMaxDamageTaken)
- GetPlayer().components.health:DoDelta(-gamble) -- does damage when used
- local oldtuning = TUNING.HAMMER_LOOT_PERCENT
- TUNING.HAMMER_LOOT_PERCENT = 0
- inst:Remove()
- inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/iceboulder_smash")
- inst.components.lootdropper:DropLoot()
- TUNING.HAMMER_LOOT_PERCENT = oldtuning
+ local x,y,z = GetPlayer().Transform:GetWorldPosition()
+ local crsRandomChance = math.random(1000)
+ if crsRandomChance == 666 then
+  local crsRandomBoss = inst.crsBosses[math.random(#inst.crsBosses)]
+  local crsBoss = SpawnPrefab(crsRandomBoss)
+  crsBoss.Transform:SetPosition(x + 5, y + 5, z)
+  crsBoss.components.combat:SetTarget(GetPlayer())
+ elseif crsRandomChance <= 50 then
+  local crsRandomMob = inst.crsMobs[math.random(#inst.crsMobs)]
+  local crsMob = SpawnPrefab(crsRandomMob)
+  crsMob.Transform:SetPosition(x + 5, y + 5, z)
+  crsMob.components.combat:SetTarget(GetPlayer())
+ else
+  local crsCycles = 1
+  local crsJackpot = math.random(10000)
+  if crsJackpot == 1337 then
+   crsCycles = 20
+  end
+  local crsRandomDamage = math.random(crsMaxDamageTaken)
+  GetPlayer().components.health:DoDelta(-crsRandomDamage) -- does damage when used
+  local oldHammerLootPercent = TUNING.HAMMER_LOOT_PERCENT
+  TUNING.HAMMER_LOOT_PERCENT = 0
+  inst:Remove()
+  inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/iceboulder_smash")
+  for x = 0, crsCycles do
+   inst.components.lootdropper:DropLoot()
+  end
+  TUNING.HAMMER_LOOT_PERCENT = oldHammerLootPercent
+ end
 end
 
 -- loot table
@@ -89,10 +110,15 @@ local function fn(Sim)
  
  inst.entity:AddSoundEmitter()
  
+ inst:AddTag("crsNoAutoCollect")
+ 
  inst:AddComponent("inventoryitem")
  inst.components.inventoryitem.atlasname = "images/inventoryimages/darkmatter.xml"
  inst.components.inventoryitem.cangoincontainer = true
-
+ 
+ inst.crsMobs = {}
+ inst.crsBosses = {}
+ 
  inst:AddComponent("lootdropper")
  inst.components.lootdropper:SetChanceLootTable('darkmatter')
  inst:ListenForEvent("ondropped", crsOnDropped)

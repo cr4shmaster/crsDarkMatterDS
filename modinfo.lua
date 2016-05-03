@@ -1,7 +1,7 @@
 name = "Dark Matter v2.2"
 description = "Adds Dark Motes, Dark Matter and Dark Pylon to the game."
 author = "cr4shmaster"
-version = "2.2.3"
+version = "2.3.0"
 forumthread = ""
 dont_starve_compatible = true
 reign_of_giants_compatible = true
@@ -11,6 +11,9 @@ icon_atlas = "modicon.xml"
 icon = "modicon.tex"
 
 local crsDarkmotes = {
+ {description = "5", data = 5},
+ {description = "10", data = 10},
+ {description = "25", data = 25},
  {description = "50", data = 50},
  {description = "75", data = 75},
  {description = "100", data = 100},
@@ -88,7 +91,7 @@ configuration_options = {
  },
  {
   name = "crsDarkPylonDarkMotes",
-  label = "DP Cut Stones",
+  label = "DP Dark Motes",
   options = crsDarkmotes,
   default = 50,
  },
