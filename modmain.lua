@@ -24,6 +24,14 @@ Vector3 = GLOBAL.Vector3
 ACTIONS = GLOBAL.ACTIONS
 Action = GLOBAL.Action
 ActionHandler = GLOBAL.ActionHandler
+getConfig = GetModConfigData
+IsDLCEnabled = GLOBAL.IsDLCEnabled
+SetSharedLootTable = GLOBAL.SetSharedLootTable
+
+-- local crsNoDLCEnabled = not IsDLCEnabled(GLOBAL.REIGN_OF_GIANTS) and not IsDLCEnabled(GLOBAL.CAPY_DLC)
+local crsAnyDLCEnabled = IsDLCEnabled(GLOBAL.REIGN_OF_GIANTS) or IsDLCEnabled(GLOBAL.CAPY_DLC)
+local crsReignOfGiantsEnabled = IsDLCEnabled(GLOBAL.REIGN_OF_GIANTS)
+local crsShipwreckedEnabled = IsDLCEnabled(GLOBAL.CAPY_DLC)
 
 local function crsMergeTables(a, b)
  for i=1, #b do
@@ -32,12 +40,8 @@ local function crsMergeTables(a, b)
  return a
 end
 
--- local crsNoDLCEnabled = not GLOBAL.IsDLCEnabled(GLOBAL.REIGN_OF_GIANTS) and not GLOBAL.IsDLCEnabled(GLOBAL.CAPY_DLC)
-local crsAnyDLCEnabled = GLOBAL.IsDLCEnabled(GLOBAL.REIGN_OF_GIANTS) or GLOBAL.IsDLCEnabled(GLOBAL.CAPY_DLC)
-local crsReignOfGiantsEnabled = GLOBAL.IsDLCEnabled(GLOBAL.REIGN_OF_GIANTS)
-local crsShipwreckedEnabled = GLOBAL.IsDLCEnabled(GLOBAL.CAPY_DLC)
+-- STRINGS --
 
--- add strings
 STRINGS.NAMES.DARKMATTER = "Dark Matter"
 STRINGS.RECIPE_DESC.DARKMATTER = "Home-made dark matter."
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.DARKMATTER = "I should drop this on the ground, see what happens. YOLO!"
@@ -49,22 +53,23 @@ STRINGS.RECIPE_DESC.DARKPYLON = "Turns most things into Dark Motes."
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.DARKPYLON = "I better not touch it directly!"
 
 
--- add recipes
-local crsDarkMatterDarkMotes = Ingredient("darkmote", GetModConfigData("crsDarkMatterDarkMotes"))
-local crsDarkPylonDarkMotes = Ingredient("darkmote", GetModConfigData("crsDarkPylonDarkMotes"))
+-- RECIPES --
+
+local crsDarkMatterDarkMotes = Ingredient("darkmote", getConfig("crsDarkMatterDarkMotes"))
+local crsDarkPylonDarkMotes = Ingredient("darkmote", getConfig("crsDarkPylonDarkMotes"))
 crsDarkMatterDarkMotes.atlas = "images/inventoryimages/darkmote.xml"
 crsDarkPylonDarkMotes.atlas = "images/inventoryimages/darkmote.xml"
--- Dark Mote
+-- Dark Mote --
 local darkmote = Recipe("darkmote", {
  Ingredient("goldnugget", 1),
 }, RECIPETABS.REFINE, TECH.NONE, nil, nil, nil, 3)
 darkmote.atlas = "images/inventoryimages/darkmote.xml"
--- Dark Matter
+-- Dark Matter --
 local darkmatter = Recipe("darkmatter", {
  crsDarkMatterDarkMotes,
 }, RECIPETABS.REFINE, TECH.MAGIC_THREE)
 darkmatter.atlas = "images/inventoryimages/darkmatter.xml"
--- Dark Pylon
+-- Dark Pylon --
 if crsShipwreckedEnabled then
  local darkpylon = Recipe("darkpylon", {
   crsDarkPylonDarkMotes,
@@ -77,22 +82,8 @@ else
  darkpylon.atlas = "images/inventoryimages/darkpylon.xml"
 end
  
--- action
-local CGIVE = Action()
-CGIVE.str = "Give"
-CGIVE.id = "CGIVE"
-CGIVE.fn = function(act)
- if act.invobject.components.ctradable then
-  if act.target.components.ctrader then
-   act.target.components.ctrader:AcceptGift(act.doer, act.invobject)
-   return true
-  end
- end
-end
-AddAction(CGIVE)
-AddStategraphActionHandler("wilson", ActionHandler(CGIVE, "give"))
+-- TINT --
 
--- add tint
 local function crsImageTintUpdate(self, num, atlas, bgim, owner, container)
  if container.widgetbgimagetint then
   self.bgimage:SetTint(container.widgetbgimagetint.r, container.widgetbgimagetint.g, container.widgetbgimagetint.b, container.widgetbgimagetint.a)
@@ -100,107 +91,154 @@ local function crsImageTintUpdate(self, num, atlas, bgim, owner, container)
 end
 AddClassPostConstruct("widgets/invslot", crsImageTintUpdate)
 
--- add item values
-local crsItemMoteValue = {
- {name = "ash", motevalue = 1},
- {name = "boneshard", motevalue = 1},
- {name = "charcoal", motevalue = 1},
- {name = "cutgrass", motevalue = 1},
- {name = "cutreeds", motevalue = 1},
- {name = "feather_crow", motevalue = 1},
- {name = "flint", motevalue = 1},
- {name = "log", motevalue = 1},
- {name = "poop", motevalue = 1},
- {name = "rocks", motevalue = 1},
- {name = "stinger", motevalue = 1},
- {name = "thulecite_pieces", motevalue = 1},
- {name = "twigs", motevalue = 1},
- {name = "sand", motevalue = 1},
- {name = "coral", motevalue = 1},
- {name = "bamboo", motevalue = 1},
- {name = "doydoyfeather", motevalue = 1},
- {name = "vine", motevalue = 1},
- {name = "snakeskin", motevalue = 1},
- {name = "palmleaf", motevalue = 1},
- {name = "seashell", motevalue = 1},
+-- ITEM VALUE --
 
- {name = "beardhair", motevalue = 2},
- {name = "beefalowool", motevalue = 2},
- {name = "rottenegg", motevalue = 2},
- {name = "silk", motevalue = 2},
- {name = "slurtleslime", motevalue = 2},
- {name = "spidergland", motevalue = 2},
- {name = "feather_robin", motevalue = 2},
- {name = "nitre", motevalue = 2},
- {name = "limestone", motevalue = 2},
- {name = "venomgland", motevalue = 2},
+local crsItemConfig = {
+ {name = "ash", quality = "common"},
+ {name = "boneshard", quality = "common"},
+ {name = "charcoal", quality = "common"},
+ {name = "cutgrass", quality = "common"},
+ {name = "cutreeds", quality = "common"},
+ {name = "feather_crow", quality = "common"},
+ {name = "flint", quality = "common"},
+ {name = "log", quality = "common"},
+ {name = "poop", quality = "common"},
+ {name = "rocks", quality = "common"},
+ {name = "stinger", quality = "common"},
+ {name = "thulecite_pieces", quality = "common"},
+ {name = "twigs", quality = "common"},
+ {name = "sand", quality = "common"},
+ {name = "coral", quality = "common"},
+ {name = "bamboo", quality = "common"},
+ {name = "doydoyfeather", quality = "common"},
+ {name = "vine", quality = "common"},
+ {name = "snakeskin", quality = "common"},
+ {name = "palmleaf", quality = "common"},
+ {name = "seashell", quality = "common"},
 
- {name = "feather_robin_winter", motevalue = 3},
- {name = "goldnugget", motevalue = 3},
- {name = "houndstooth", motevalue = 3},
- {name = "pigskin", motevalue = 3},
- {name = "obsidian", motevalue = 3},
+ {name = "feather_robin", quality = "uncommon"},
+ {name = "beefalowool", quality = "uncommon"},
+ {name = "rottenegg", quality = "uncommon"},
+ {name = "beardhair", quality = "uncommon"},
+ {name = "silk", quality = "uncommon"},
+ {name = "slurtleslime", quality = "uncommon"},
+ {name = "spidergland", quality = "uncommon"},
+ {name = "nitre", quality = "uncommon"},
+ {name = "limestone", quality = "uncommon"},
+ {name = "venomgland", quality = "uncommon"},
+ {name = "feather_robin_winter", quality = "uncommon"},
+
+ {name = "goldnugget", quality = "rare"},
+ {name = "houndstooth", quality = "rare"},
+ {name = "pigskin", quality = "rare"},
+ {name = "obsidian", quality = "rare"},
+ {name = "manrabbit_tail", quality = "rare"},
+ {name = "mosquitosack", quality = "rare"},
  
- {name = "honeycomb", motevalue = 5},
- {name = "horn", motevalue = 5},
- {name = "lightninggoathorn", motevalue = 5},
- {name = "livinglog", motevalue = 5},
- {name = "manrabbit_tail", motevalue = 5},
- {name = "mosquitosack", motevalue = 5},
- {name = "nightmarefuel", motevalue = 5},
- {name = "tentaclespots", motevalue = 5},
- -- {name = "fireflies", motevalue = 5},
- -- {name = "bioluminescence", motevalue = 5},
+ {name = "nightmarefuel", quality = "veryrare"},
+ {name = "honeycomb", quality = "veryrare"},
+ {name = "lightninggoathorn", quality = "veryrare"},
+ {name = "tentaclespots", quality = "veryrare"},
+ {name = "marble", quality = "veryrare"},
+ {name = "thulecite", quality = "veryrare"},
+ {name = "gears", quality = "veryrare"},
  
- {name = "gears", motevalue = 6},
- {name = "marble", motevalue = 6},
+ {name = "livinglog", quality = "extremelyrare"},
+ {name = "bluegem", quality = "extremelyrare"},
+ {name = "redgem", quality = "extremelyrare"},
+ {name = "purplegem", quality = "extremelyrare"},
  
- {name = "thulecite", motevalue = 8},
  
- {name = "bluegem", motevalue = 10},
- {name = "goose_feather", motevalue = 10},
- {name = "shark_gills", motevalue = 10},
- {name = "redgem", motevalue = 10},
+ {name = "goose_feather", quality = "epic"},
+ {name = "shark_gills", quality = "epic"},
+ {name = "greengem", quality = "epic"},
+ {name = "walrus_tusk", quality = "epic"},
+ {name = "yellowgem", quality = "epic"},
  
- {name = "purplegem", motevalue = 15},
+ {name = "bearger_fur", quality = "legendary"},
+ {name = "deerclops_eyeball", quality = "legendary"},
+ {name = "dragon_scales", quality = "legendary"},
+ {name = "minotaurhorn", quality = "legendary"},
+ {name = "turbine_blades", quality = "legendary"},
+ {name = "tigereye", quality = "legendary"},
  
- {name = "greengem", motevalue = 20},
- {name = "walrus_tusk", motevalue = 20},
- {name = "yellowgem", motevalue = 20},
- {name = "bearger_fur", motevalue = 50},
- 
- {name = "deerclops_eyeball", motevalue = 50},
- {name = "dragon_scales", motevalue = 50},
- {name = "minotaurhorn", motevalue = 50},
- {name = "turbine_blades", motevalue = 50},
- {name = "tigereye", motevalue = 50},
- 
- {name = "snakeoil", motevalue = 100},
+ {name = "snakeoil", quality = "unknown"},
 }
 
-for k,v in pairs(crsItemMoteValue) do
- if v.name then
-  AddPrefabPostInit(v.name, function(inst)
-   inst:AddTag("ctradable")
-   inst:AddComponent("ctradable")    
-   inst.components.ctradable.motevalue = v.motevalue
-  end)
+local crsQuality = {
+ {q = "common",        c = 0.3,   v = 1},
+ {q = "uncommon",      c = 0.2,   v = 2},
+ {q = "rare",          c = 0.1,   v = 3},
+ {q = "veryrare",      c = 0.07,  v = 5},
+ {q = "extremelyrare", c = 0.04,  v = 10},
+ {q = "epic",          c = 0.02,  v = 20},
+ {q = "legendary",     c = 0.01,  v = 50},
+ {q = "unknown",       c = 0.001, v = 100},
+}
+
+local crsLootTable = {}
+
+for k = 1, #crsItemConfig do
+ if crsItemConfig[k].name then
+  for n = 1, #crsQuality do
+   if crsItemConfig[k].quality == crsQuality[n].q then
+    table.insert(crsLootTable, {crsItemConfig[k].name, crsQuality[n].c})
+    AddPrefabPostInit(crsItemConfig[k].name, function(inst)
+     inst:AddTag("crsHasDarkValue")  
+     inst:AddTag("crsHasDarkChance")  
+     inst.crsDarkValue = crsQuality[n].v
+    end)
+   end
+  end
  end
 end
 
-local crsWidgetPosition = Vector3(GetModConfigData("crsHorizontalPosition"),GetModConfigData("crsVerticalPosition"),0) -- background image position
+SetSharedLootTable('darkmatter', crsLootTable)
+
+-- CONTAINER POSITION --
+
+local crsWidgetPosition = Vector3(getConfig("crsHorizontalPosition"),getConfig("crsVerticalPosition"),0) -- background image position
 AddPrefabPostInit("darkpylon", function(inst)
  inst.components.container.widgetpos = crsWidgetPosition
 end)
 
-local crsMobs = {"spider", "hound", "ghost", "knight", "bat", "frog", "tallbird", "mosquito", "killerbee",}
-local crsBosses = {"deerclops",}
+-- MOB/BOSS SPAWNING --
 
-local crsReignOfGiantsMobs = {"warg",}
-local crsReignOfGiantsBosses = {"bearger", "dragonfly",}
+local crsMobs = {
+ "spider",
+ "hound",
+ "ghost",
+ "knight",
+ "bat",
+ "frog",
+ "tallbird",
+ "mosquito",
+ "killerbee",
+}
+ 
+local crsBosses = {
+ "deerclops",
+}
 
-local crsShipwreckedMobs = {"snake", "snake_poison", "mosquito_poison", "dragoon",}
-local crsShipwreckedBosses = {"tigershark",}
+local crsReignOfGiantsMobs = {
+ "warg",
+}
+
+local crsReignOfGiantsBosses = {
+ "bearger",
+ "dragonfly",
+}
+
+local crsShipwreckedMobs = {
+ "snake",
+ "snake_poison",
+ "mosquito_poison",
+ "dragoon",
+}
+
+local crsShipwreckedBosses = {
+ "tigershark",
+}
 
 if crsAnyDLCEnabled then
  for i = 1, #crsReignOfGiantsMobs do
