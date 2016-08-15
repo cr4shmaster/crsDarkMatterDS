@@ -1,3 +1,15 @@
+-- This mod consists of 3 new items: the Dark Pylon, Dark Mote, and Dark Matter. 
+-- The Dark Pylon is used to transform most mats into Dark Motes. You can do so by 
+--  placing them in its container and letting the Dark Pylon exchange them while you
+--  are doing something else. 
+-- Dark Motes are used to craft Dark Matter or various other items, including the Dark Pylon. 
+--  They are acquired by destroying Gold Nuggets or by using the Dark Pylon after crafting it. 
+-- Dark Matter breaks and drops a few random items when dropped on the ground; it also deals
+--  a random amount of damage to the player, the maximum amount is configurable. There's also 
+--  a 5% chance to spawn a hostile mob instead of dropping items, a 0.1% chance to spawn a boss,
+--  or a 0.01% chance to hit the jackpot and drop 100 times more items.
+-- The recipes are found on the Refine tab.
+
 -- Author:
 -- cr4shmaster: http://steamcommunity.com/id/cr4shmaster
 
