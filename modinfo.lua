@@ -16,7 +16,7 @@
 name = "Dark Matter v2.4"
 description = "Adds Dark Motes, Dark Matter and Dark Pylon to the game."
 author = "cr4shmaster"
-version = "2.4.1"
+version = "2.4.1.1"
 forumthread = ""
 dont_starve_compatible = true
 reign_of_giants_compatible = true
