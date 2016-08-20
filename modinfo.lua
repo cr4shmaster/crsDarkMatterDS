@@ -10,8 +10,8 @@
 --  or a 0.01% chance to hit the jackpot and drop 100 times more items.
 -- The recipes are found on the Refine tab.
 
--- Author:
--- cr4shmaster: http://steamcommunity.com/id/cr4shmaster
+-- Workshop Page: http://steamcommunity.com/sharedfiles/filedetails/?id=407474316
+-- Author: cr4shmaster: http://steamcommunity.com/id/cr4shmaster
 
 name = "Dark Matter v2.4"
 description = "Adds Dark Motes, Dark Matter and Dark Pylon to the game."
