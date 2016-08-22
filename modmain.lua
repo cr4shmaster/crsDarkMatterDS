@@ -61,27 +61,15 @@ local DPMotes = Ingredient("darkmote", getConfig("cfgDPMotes"))
 DMMotes.atlas = "images/inventoryimages/darkmote.xml"
 DPMotes.atlas = "images/inventoryimages/darkmote.xml"
 -- Dark Mote --
-local darkmote = Recipe("darkmote", {
-    Ingredient("goldnugget", 1),
-}, RECIPETABS.REFINE, TECH.NONE, nil, nil, nil, 3)
+local darkmote = Recipe("darkmote", {Ingredient("goldnugget", 1)}, RECIPETABS.REFINE, TECH.NONE, nil, nil, nil, 3)
 darkmote.atlas = "images/inventoryimages/darkmote.xml"
 -- Dark Matter --
-local darkmatter = Recipe("darkmatter", {
-    DMMotes,
-}, RECIPETABS.REFINE, TECH.MAGIC_THREE)
+local darkmatter = Recipe("darkmatter", {DMMotes}, RECIPETABS.REFINE, TECH.MAGIC_THREE)
 darkmatter.atlas = "images/inventoryimages/darkmatter.xml"
 -- Dark Pylon --
-if crsShipwreckedEnabled then
-local darkpylon = Recipe("darkpylon", {
-    DPMotes,
-}, RECIPETABS.REFINE, TECH.NONE, GLOBAL.RECIPE_GAME_TYPE.COMMON, "darkpylon_placer")
+local darkpylon = swDLC and Recipe("darkpylon", {DPMotes}, RECIPETABS.REFINE, TECH.NONE, GLOBAL.RECIPE_GAME_TYPE.COMMON, "darkpylon_placer")
+                or Recipe("darkpylon", DPMotes, RECIPETABS.REFINE, TECH.NONE, "darkpylon_placer")
 darkpylon.atlas = "images/inventoryimages/darkpylon.xml"
-else
-local darkpylon = Recipe("darkpylon", {
-    DPMotes,
-}, RECIPETABS.REFINE, TECH.NONE, "darkpylon_placer")
-darkpylon.atlas = "images/inventoryimages/darkpylon.xml"
-end
  
 -- TINT --
 
