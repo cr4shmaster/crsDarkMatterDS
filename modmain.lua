@@ -67,8 +67,7 @@ darkmote.atlas = "images/inventoryimages/darkmote.xml"
 local darkmatter = Recipe("darkmatter", {DMMotes}, RECIPETABS.REFINE, TECH.MAGIC_THREE)
 darkmatter.atlas = "images/inventoryimages/darkmatter.xml"
 -- Dark Pylon --
-local darkpylon = swDLC and Recipe("darkpylon", {DPMotes}, RECIPETABS.REFINE, TECH.NONE, GLOBAL.RECIPE_GAME_TYPE.COMMON, "darkpylon_placer")
-                or Recipe("darkpylon", DPMotes, RECIPETABS.REFINE, TECH.NONE, "darkpylon_placer")
+local darkpylon = swDLC and Recipe("darkpylon", {DPMotes,}, RECIPETABS.REFINE, TECH.NONE, GLOBAL.RECIPE_GAME_TYPE.COMMON, "darkpylon_placer") or Recipe("darkpylon", {DPMotes,}, RECIPETABS.REFINE, TECH.NONE, "darkpylon_placer")
 darkpylon.atlas = "images/inventoryimages/darkpylon.xml"
  
 -- TINT --
