@@ -1,22 +1,9 @@
--- This mod consists of 3 new items: the Dark Pylon, Dark Mote, and Dark Matter. 
--- The Dark Pylon is used to transform most mats into Dark Motes. You can do so by 
---  placing them in its container and letting the Dark Pylon exchange them while you
---  are doing something else. 
--- Dark Motes are used to craft Dark Matter or various other items, including the Dark Pylon. 
---  They are acquired by destroying Gold Nuggets or by using the Dark Pylon after crafting it. 
--- Dark Matter breaks and drops a few random items when dropped on the ground; it also deals
---  a random amount of damage to the player, the maximum amount is configurable. There's also 
---  a 5% chance to spawn a hostile mob instead of dropping items, a 0.1% chance to spawn a boss,
---  or a 0.01% chance to hit the jackpot and drop 100 times more items.
--- The recipes are found on the Refine tab.
+-- More information here: https://sites.google.com/view/cr4shmaster/dark-matter-ds-dst
 
--- Workshop Page: http://steamcommunity.com/sharedfiles/filedetails/?id=407474316
--- Author: cr4shmaster: http://steamcommunity.com/id/cr4shmaster
-
-name = "Dark Matter v2.4"
+name = "Dark Matter v2.4.2.2"
 description = "Adds Dark Motes, Dark Matter and Dark Pylon to the game."
 author = "cr4shmaster"
-version = "2.4.2.1"
+version = "2.4.2.2"
 forumthread = ""
 dont_starve_compatible = true
 reign_of_giants_compatible = true
@@ -121,13 +108,5 @@ configuration_options = {
         label = "DP UI y Position",
         options = crsPosition,
         default = -100,
-    },
-    {
-        name = "cfgTestCheck",
-        label = "Installed",
-        options = {
-            {description = "Yes", data = true},
-        },
-        default = true,
     },
 }

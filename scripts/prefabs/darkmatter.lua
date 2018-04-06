@@ -5,12 +5,9 @@ local assets = {
     Asset("IMAGE", "images/inventoryimages/darkmatter.tex"),
 }
 
-local crsDarkMatterDS = nil
-if GetModConfigData("cfgTestCheck", "workshop-407474316") then
-    crsDarkMatterDS = "workshop-407474316"
-else
-    crsDarkMatterDS = "crsDarkMatterDS"
-end
+crsDarkMatterDS = "workshop-407474316"
+-- crsDarkMatterDS = "crsDarkMatterDS"
+
 local maxDamage = GetModConfigData("cfgDMMaxDmg", crsDarkMatterDS)
 
 local function crsOnDropped(inst)
